@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #divContent{
+            width: 400px;
+            display: block;
+            text-align: center;
+            border: 2px solid;
+            margin: 0 auto;
+        }
+        #listend{
+               width: 400px;
+            display: block;
+            text-align: center;
+            border: 2px solid;
+            margin: 5px auto;
+        }
+        .item{
+            width: 400px;
+            height: 50px;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="divContent"></div>
+<div id="listend">
+  
+</div>
+<br/><br/><br />
+
+</body>
+</html>
+<script>
+   let div=document.getElementById("divContent")
+   let listEnd=document.getElementById("listtent");
+    window.addEventListener('content loaded',load)
+    let counter=0;
+    let appending=false;
+   function load(){
+       additem()
+   }
+
+   function additem(){
+       appending=true
+        for(let i=0;i<20;i++){
+            let item=generatedaatBlock(`masi student ${counter}`)
+            div.appendChild(item);
+            counter++;
+        }
+        appending=false;
+   }
+
+   function generatedaatBlock(message){
+       let item=document.createElement('div');
+       item.setAttribute('class','item')
+       item.textContent=message;
+       return item;
+   }
+   let options={
+       root:null,
+       rootMargin:'0px',
+       threshold:1.0
+   }
+let callback=(entries,observer)=>{
+   entries.forEach(entry => {
+       if(entry.target.id==="listend"){
+           if(entry.isIntersecting && !appending){
+               appending=true;
+               setTimeout(()=>{
+                   additem()
+               },1000)
+           }
+       }
+   });
+}
+
+   let observer = new IntersectionObserver(callback, options)
+   observer.observe(listend);
+
+</script>
